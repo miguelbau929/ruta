@@ -1,4 +1,4 @@
-const CACHE='ruta-offline-v7';
+const CACHE='ruta-offline-v9';
 const FILES=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{
@@ -26,7 +26,7 @@ self.addEventListener('fetch',event=>{
         await cache.put('./index.html',response.clone());
         return response;
       }catch(error){
-        return (await caches.match('./index.html'))||Response.error();
+        return (await caches.match(request))||(await caches.match('./'))||(await caches.match('./index.html'))||Response.error();
       }
     })());
     return;
